@@ -1,0 +1,214 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+@*<section class="banner-area relative" id="home">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="about-content col-lg-12">
+                    <h1 class="text-white">
+                        Login
+                    </h1>
+                    <p class="text-white link-nav"><a asp-area="" asp-controller="Home" asp-action="Index">Home </a> <span class="lnr lnr-arrow-right"></span><a asp-area="" asp-action="Login" asp-controller="Account">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+     End banner Area
+
+    <h1 class="mb-10">@ViewData["Title"]</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <section>
+                <form class="form-area" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="col-lg-12 form-group">
+
+                        <input asp-for="Username" placeholder="Enter your User Name" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg-12 form-group">
+
+                        <input asp-for="Password" placeholder="Enter your Password" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn mt-20 text-white" style="float: left;">Login</button>
+
+                    <hr />
+                    <br />
+                    <br />
+
+                    <br />
+                    <br /> <br />
+                    <br />
+
+                </form>
+
+                <div class="col-lg-12">
+
+                    <a asp-controller="Account" asp-action="ForgotPassword">Forgot your password?</a>
+                    <br />
+
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+
+                </div>
+            </section>
+        </div>
+        <div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4>Use another service to log in.</h4>
+                <hr />
+                @{
+                    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                    if (loginProviders.Count == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in loginProviders)
+                                    {
+                                        <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }
+            </section>
+        </div>
+    </div>
+*@
+
+
+
+@model LoginViewModel
+@inject SignInManager<AppUser> SignInManager
+
+<div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(/images/hero_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row align-items-center justify-content-center text-center">
+
+            <div class="col-md-10" data-aos="fade-up" data-aos-delay="400">
+
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h1>Login</h1>
+                        <p data-aos="fade-up" data-aos-delay="100">Handcrafted free templates by <a href="https://free-template.co/" target="_blank">Free-Template.co</a></p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+
+
+
+                <form method="post" class="p-5 bg-white" style="margin-top: -150px;">
+
+                    <div class="row form-group">
+
+                        <div class="col-md-12">
+                            <label class="text-black" for="email">Email</label>
+                            <input asp-for="Username" type="email" id="email" class="form-control">
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+
+                        <div class="col-md-12">
+                            <label class="text-black" for="pass1">Password</label>
+                            <input asp-for="Password" type="password" id="pass1" class="form-control">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <input type="submit" value="Login" class="btn btn-block btn-outline-primary btn-md px-5">
+                        </div>
+                    </div>
+
+                    <hr />
+                    <a asp-controller="Account" asp-action="ForgotPassword" style="float: right">Forgot your password?</a>
+
+
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+
+
+            <div class="col-md-6 mb-5">
+
+                <h1 class="text-muted">LOGIN</h1>
+
+                <p>Terms and conditions and other text will go here</p>
+
+                <br />
+                <hr />
+
+
+                <div class="col-lg-12">
+
+                   
+                    <br />
+
+                    <p>New User?</p>
+
+                    <a type="submit" class="btn btn-block btn-outline-primary btn-md px-5" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register Here</a>
+
+                </div>
+            </div>
+
+
+            </div>
+    </div>
+</div>
+@section Scripts {
+@await Html.PartialAsync("_ValidationScriptsPartial")
+}
