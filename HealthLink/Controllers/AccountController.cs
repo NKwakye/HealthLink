@@ -279,7 +279,6 @@ namespace HealthLink.Controllers
                         await _roleManager.CreateAsync(new IdentityRole(UserType.Hospital));
                     }
 
-
                     //if (user.Email == "admin@gmail.com" && user.PhoneNumber == "1112223333" && user.FirstName == "Admin" && user.LastName == "Spark")
                     //{
                     //    await _userManager.AddToRoleAsync(user, UserType.AdminEndUser);
@@ -296,7 +295,6 @@ namespace HealthLink.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    HttpContext.Session.SetInt32("CartCount", 0);
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);

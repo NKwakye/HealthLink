@@ -160,16 +160,7 @@
 
                                     <div class="col-md-12">
 
-                                        @foreach (var _roles in Model.roles)
-                                        {
-                                            <input type="radio" asp-for="Role" value="@_roles"
-                                                   id="_roles@(_roles)" />
-                                            <label for="_roles@(_roles)">
-                                                @_roles
-                                            </label>
-                                       
-                                        }
-                                        <span asp-validation-for="Role" class="text-danger"></span>
+                                      
 
                                     </div>
                                 </div>

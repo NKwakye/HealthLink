@@ -53,11 +53,11 @@
                     <nav class="site-navigation position-relative text-right" role="navigation">
 
                         <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                            <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index"><span>Home</span></a></li>
-                            <li><a href="hospitals.html"><span>Hospitals</span></a></li>
-                            <li><a href="about.html"><span>About</span></a></li>
-                            <li><a href="blog.html"><span>Blog</span></a></li>
-                            <li><a href="contact.html"><span>Contact</span></a></li>
+                            <li><a asp-controller="Home" asp-action="Index"><span>Home</span></a></li>
+                            <li><a asp-controller="Home" asp-action="Hospitals"><span>Hospitals</span></a></li>
+                            <li><a asp-controller="Home" asp-action="AboutUs"><span>About</span></a></li>
+                            <li><a asp-controller="Home" asp-action="Blog" ><span>Blog</span></a></li>
+                            <li><a asp-controller="Home" asp-action="ContactUs" ><span>Contact</span></a></li>
 
                             @if (SignInManager.IsSignedIn(User))
                             {
