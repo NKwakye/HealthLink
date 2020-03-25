@@ -248,15 +248,14 @@ namespace HealthLink.Controllers
                     PhoneNumber = model.PhoneNumber,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    IsDonor = model.IsDonor,
                     FullName = model.LastName + " " + model.LastName,
                    
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //admin@gmail.com
-                    //ph : 1112223333
-                    //name : Admin Spark
+                    
 
                     if (!await _roleManager.RoleExistsAsync(UserType.AdminEndUser))
                     {
@@ -279,12 +278,7 @@ namespace HealthLink.Controllers
                         await _roleManager.CreateAsync(new IdentityRole(UserType.Hospital));
                     }
 
-                    //if (user.Email == "admin@gmail.com" && user.PhoneNumber == "1112223333" && user.FirstName == "Admin" && user.LastName == "Spark")
-                    //{
-                    //    await _userManager.AddToRoleAsync(user, UserType.AdminEndUser);
-                    //}
-                    //else
-                    //{ }
+                   
                     await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
 
                     _logger.LogInformation("User created a new account with password.");

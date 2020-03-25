@@ -129,10 +129,10 @@
                         <div class="col-md-6 mb-5 mb-lg-0 col-lg-3">
                             <h2 class="footer-heading mb-4">Features</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#">About Us</a></li>
+                                <li><a asp-controller="Home" asp-action="AboutUs">About Us</a></li>
                                 <li><a href="#">Services</a></li>
                                 <li><a href="#">Testimonials</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a  asp-controller="Home" asp-action="ContactUs">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6 mb-5 mb-lg-0 col-lg-3">
@@ -161,8 +161,7 @@
                 <div class="col-12 text-md-center text-left">
                     <p>
                         <!-- Link back to Free-Template.co can't be removed. Template is licensed under CC BY 3.0. -->
-                        &copy; 2019 <strong class="text-black">Browse</strong> Free Template. All Rights Reserved. <br> Design by <a href="https://free-template.co/" target="_blank" class="text-black">Free-Template.co</a>
-                    </p>
+                        &copy; @DateTime.Now.Year <strong class="text-black"></strong> HealthLink <br> All Rights Reserved.
                 </div>
             </div>
         </div>

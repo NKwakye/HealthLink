@@ -37,10 +37,14 @@ namespace HealthLink.Models.AccountViewModels
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Are you a donor?")]
+        public bool IsDonor { get; set; }
+
         [Required]
         [BindProperty]
         public string Role { get; set; }
         public string[] roles = new[] {  "Customer", "Donor", "Hospital" };
+
     }
 
 }

@@ -106,12 +106,12 @@
                                 <div class="row form-group">
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label class="text-black">First Name</label>
-                                        <input asp-for="FirstName" type="text"  class="form-control">
+                                        <input asp-for="FirstName" type="text" class="form-control">
                                         <span asp-validation-for="FirstName" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="text-black">Last Name</label>
-                                        <input asp-for="LastName" type="text"  class="form-control">
+                                        <input asp-for="LastName" type="text" class="form-control">
                                         <span asp-validation-for="LastName" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -119,8 +119,8 @@
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
-                                        <label class="text-black" >Email</label>
-                                        <input asp-for="Email" type="email"  class="form-control">
+                                        <label class="text-black">Email</label>
+                                        <input asp-for="Email" type="email" class="form-control">
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
-                                        <label class="text-black" >Password</label>
+                                        <label class="text-black">Password</label>
                                         <input asp-for="Password" type="password" class="form-control">
                                         <span asp-validation-for="Password" class="text-danger"></span>
 
@@ -139,7 +139,7 @@
 
                                     <div class="col-md-12">
                                         <label class="text-black">Re-type Password</label>
-                                        <input asp-for="ConfirmPassword" type="password"  class="form-control">
+                                        <input asp-for="ConfirmPassword" type="password" class="form-control">
                                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
 
                                     </div>
@@ -148,19 +148,28 @@
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
-                                        <label class="text-black" >Re-type Password</label>
-                                        <input asp-for="PhoneNumber" type="tel"  class="form-control"/>
+                                        <label class="text-black">Re-type Password</label>
+                                        <input asp-for="PhoneNumber" type="tel" class="form-control" />
                                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 
                                     </div>
 
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label asp-for="IsDonor">
+                                            <input asp-for="IsDonor" />
+                                            @Html.DisplayNameFor(m => m.IsDonor)
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div class="row form-group">
 
                                     <div class="col-md-12">
 
-                                      
+
 
                                     </div>
                                 </div>
