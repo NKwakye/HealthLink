@@ -71,10 +71,7 @@ namespace HealthLink.Controllers
                 if (result.Succeeded)
                 {
                     var user = _db.Users.Where(u => u.Email == model.Username).FirstOrDefault();
-
-                    //var count = _db.ShoppingCart.Where(u => u.AppUserId == user.Id).ToList().Count;
-                    //HttpContext.Session.SetInt32("CartCount", count);
-                    //_logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User logged in.");
 
 
                     return RedirectToLocal(returnUrl);
@@ -220,15 +217,7 @@ namespace HealthLink.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
-            if (!await _roleManager.RoleExistsAsync(UserType.AdminEndUser))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(UserType.AdminEndUser));
-                await _roleManager.CreateAsync(new IdentityRole(UserType.CustomerEndUser));
-                await _roleManager.CreateAsync(new IdentityRole(UserType.Donor));
-                await _roleManager.CreateAsync(new IdentityRole(UserType.Hospital));
-            }
-
-    
+           
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -255,8 +244,6 @@ namespace HealthLink.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    
-
                     if (!await _roleManager.RoleExistsAsync(UserType.AdminEndUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(UserType.AdminEndUser));
@@ -271,21 +258,15 @@ namespace HealthLink.Controllers
                         var resultAdmin = await _userManager.CreateAsync(userAdmin, "Admin123*");
                         await _userManager.AddToRoleAsync(userAdmin, UserType.AdminEndUser);
                     }
-                    if (!await _roleManager.RoleExistsAsync(UserType.CustomerEndUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(UserType.CustomerEndUser));
-                        await _roleManager.CreateAsync(new IdentityRole(UserType.Donor));
-                        await _roleManager.CreateAsync(new IdentityRole(UserType.Hospital));
-                    }
-
                    
-                    await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
+
+                    //await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
 
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
@@ -386,8 +367,20 @@ namespace HealthLink.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
-
+                    if (!await _roleManager.RoleExistsAsync(UserType.AdminEndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(UserType.AdminEndUser));
+                        var userAdmin = new AppUser
+                        {
+                            UserName = "ComplexStudios6@gmail.com",
+                            Email = "ComplexStudios6@gmail.com",
+                            PhoneNumber = "0557879554",
+                            FirstName = "Complex",
+                            LastName = "Studios6"
+                        };
+                        var resultAdmin = await _userManager.CreateAsync(userAdmin, "Admin123*");
+                        await _userManager.AddToRoleAsync(userAdmin, UserType.AdminEndUser);
+                    }
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

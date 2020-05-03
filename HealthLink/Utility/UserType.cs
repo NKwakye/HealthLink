@@ -9,19 +9,9 @@ namespace HealthLink.Utility
     {
      
         public const string AdminEndUser = "Admin";
-        public const string CustomerEndUser = "Customer";
+        public const string RecieverEndUser = "Reciever";
         public const string Donor = "Donor";
         public const string Hospital = "Hospital";
-
-
-    
-
-        //public const string StatusSubmitted = "Submitted";
-        //public const string StatusInProcess = "Being Prepared";
-        //public const string StatusReady = "Ready for Pickup";
-        //public const string StatusCompleted = "Completed";
-        //public const string StatusCancelled = "Cancelled";
-
 
     }
 }
