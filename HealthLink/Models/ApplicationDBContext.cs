@@ -14,5 +14,7 @@ namespace HealthLink.Models
         {
 
         }
-    }
+
+        public DbSet<Hospitals> Hospitals { get; set; }
+    }   
 }

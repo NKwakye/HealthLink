@@ -13,6 +13,7 @@ using HealthLink.Services;
 using HealthLink.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthLink.Controllers
 {
@@ -90,6 +91,42 @@ namespace HealthLink.Controllers
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginHospital(string returnUrl = null)
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginHospital(HosipitalLoginViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var user = _db.Hospitals.Where(u => u.HospitalName == model.HospitalName).FirstOrDefault();
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                //var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: true);
+                if (user.Password == model.Password)
+                {
+                   
+                    _logger.LogInformation("User logged in.");
+                    return RedirectToAction("Hospitals", "Index");
+                }
+               
             }
 
             // If we got this far, something failed, redisplay form
@@ -222,6 +259,66 @@ namespace HealthLink.Controllers
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> RegisterHospital(string returnUrl = null)
+        {
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterHospital(RegisterHospitalViewModel hospital)
+        {
+            if (ModelState.IsValid)
+            {
+                var newHospital = new Hospitals
+                {
+                    HospitalName = hospital.HospitalName,
+                    Email = hospital.Email,
+                    Telephone = hospital.Telephone,
+                    Phone = hospital.PhoneNumber,
+                    WebsiteUrl = hospital.WebsiteUrl,
+                    Location = hospital.Location,
+                    Password = hospital.Password
+                };
+                var result = await _db.Hospitals.SingleOrDefaultAsync(m => m.HospitalName == newHospital.HospitalName);
+                if (result == null)
+                {
+
+                    _db.Add(newHospital);
+                    await _db.SaveChangesAsync();
+
+                }
+                if (!await _roleManager.RoleExistsAsync(UserType.AdminEndUser))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(UserType.AdminEndUser));
+                    var userAdmin = new AppUser
+                    {
+                        UserName = "ComplexStudios6@gmail.com",
+                        Email = "ComplexStudios6@gmail.com",
+                        PhoneNumber = "0557879554",
+                        FirstName = "Complex",
+                        LastName = "Studios6"
+                    };
+                    var resultAdmin = await _userManager.CreateAsync(userAdmin, "Admin123*");
+                    await _userManager.AddToRoleAsync(userAdmin, UserType.AdminEndUser);
+
+                }
+
+                _logger.LogInformation("User created a new account with password.");
+
+                return RedirectToAction("Index", "Hospitals");
+               
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(hospital);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -241,6 +338,7 @@ namespace HealthLink.Controllers
                     FullName = model.LastName + " " + model.LastName,
                    
                 };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
