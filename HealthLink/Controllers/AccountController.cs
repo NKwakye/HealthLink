@@ -358,7 +358,7 @@ namespace HealthLink.Controllers
                     }
                    
 
-                    //await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
+                    await _userManager.AddToRoleAsync(user, UserType.UnknownUser);
 
                     _logger.LogInformation("User created a new account with password.");
 
