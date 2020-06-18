@@ -1,75 +1,12 @@
 ﻿
 @model RegisterViewModel
 @inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
 
 @{
     ViewData["Title"] = "Register";
 }
-
-
-@*start banner Area
-    <section class="banner-area relative" id="home">
-        <div class="overlay overlay-bg"></div>
-        <div class="container">
-            <div class="row d-flex align-items-center justify-content-center">
-                <div class="about-content col-lg-12">
-                    <h1 class="text-white">
-                        Register
-                    </h1>
-                    <p class="text-white link-nav"><a asp-area="" asp-controller="Home" asp-action="Index">Home </a> <span class="lnr lnr-arrow-right"></span><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-     End banner Area*@
-
-@*<div class="row">
-    <div class="col-4">
-        <form class="form-area" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-            <h1 class="mb-10" class="text-info">Create a new account.</h1>
-            <hr />*@
-
-@*<div class="col-lg-12 form-group">
-
-                    <input asp-for="FirstName" placeholder="Enter your name" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text">
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
-                <div class="col-lg-12 form-group">
-                    <input asp-for="LastName" placeholder="Enter your other names" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
-                <div class="col-lg-12 form-group">
-
-                    <input asp-for="PhoneNumber" placeholder="Enter your Phone Number" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="col-lg-12 form-group">
-
-                    <input asp-for="Email" placeholder="Enter your Email Address" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="col-lg-12 form-group">
-
-                    <input asp-for="Password" placeholder="Enter your Password" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="col-lg-12 form-group">
-
-                    <input asp-for="ConfirmPassword" placeholder="Confirm Password" onfocus="this.placeholder = ''" class="common-input mb-20 form-control" required="" type="text" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-
-
-                <button type="submit" class="primary-btn mt-20 text-white" style="float: right;" value="Register">Register</button>
-
-                @Html.AntiForgeryToken()
-            </form>
-        </div>
-    </div>*@
-
-
-
 
 
 
@@ -103,9 +40,10 @@
                 <form class="p-5 bg-white" style="margin-top: -150px;" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
 
 
+
                     <div class="row form-group">
                         <div class="col-md-12">
-                            
+
                         </div>
                         <div class="col-md-6 mb-3 mb-md-0">
                             <label class="text-black">First Name</label>
@@ -193,7 +131,10 @@
             <div class="col-md-6 mb-5">
 
                 <h1 class="text-muted">Terms and Condition</h1>
-
+                <p>
+                    Register with a valid email address. Please make sure that you are in good general health,
+                    weigh at least 110 pounds and be at least 16 years old. Parental consent will be required for people who are 16 years and below.
+                </p>
             </div>
 
 

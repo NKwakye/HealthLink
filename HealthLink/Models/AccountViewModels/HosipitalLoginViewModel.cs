@@ -6,7 +6,7 @@ namespace HealthLink.Models.AccountViewModels
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string HospitalName { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

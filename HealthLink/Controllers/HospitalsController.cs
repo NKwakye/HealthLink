@@ -14,6 +14,31 @@ namespace HealthLink.Controllers
             return View();
         }
 
+        public IActionResult Donors()
+
+        {
+            return View();
+        }
+
+        public IActionResult Recievers()
+
+        {
+            return View();
+        }
+
+        public IActionResult PostBlog()
+
+        {
+            return View();
+        }
+
+        public IActionResult Info()
+
+        {
+            return View();
+        }
+
+
 
 
     }

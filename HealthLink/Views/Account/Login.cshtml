@@ -9,10 +9,9 @@
 }
 
 
-
-
 @model LoginViewModel
 @inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 
 <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(/images/hero_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
     <div class="container">
@@ -92,13 +91,19 @@
 
                 <p>Terms and conditions and other text will go here</p>
 
+
+                <p>
+                Register with a valid email address. Please make sure that you are in good general health,
+                weigh at least 110 pounds and be at least 16 years old. Parental consent will be required for people who are 16 years and below.
+                </p>
+
                 <br />
                 <hr />
 
 
                 <div class="col-lg-12">
 
-                   
+
                     <br />
 
                     <p>New User?</p>
@@ -109,9 +114,9 @@
             </div>
 
 
-            </div>
+        </div>
     </div>
 </div>
 @section Scripts {
-@await Html.PartialAsync("_ValidationScriptsPartial")
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

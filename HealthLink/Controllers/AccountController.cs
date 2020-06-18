@@ -116,17 +116,15 @@ namespace HealthLink.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = _db.Hospitals.Where(u => u.HospitalName == model.HospitalName).FirstOrDefault();
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                //var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: true);
-                if (user.Password == model.Password)
-                {
-                   
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Hospitals", "Index");
-                }
+                var user = _db.Hospitals.Where(u => u.Email == model.Email).FirstOrDefault();
                
+                if (model.Password == user.Password)
+                {
+
+                    _logger.LogInformation("User logged in.");
+                    return RedirectToAction("Index", "Hospitals");
+                }
+
             }
 
             // If we got this far, something failed, redisplay form
@@ -254,7 +252,7 @@ namespace HealthLink.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
-           
+
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -312,7 +310,7 @@ namespace HealthLink.Controllers
                 _logger.LogInformation("User created a new account with password.");
 
                 return RedirectToAction("Index", "Hospitals");
-               
+
             }
 
             // If we got this far, something failed, redisplay form
@@ -336,7 +334,7 @@ namespace HealthLink.Controllers
                     LastName = model.LastName,
                     IsDonor = model.IsDonor,
                     FullName = model.LastName + " " + model.LastName,
-                   
+
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -356,15 +354,22 @@ namespace HealthLink.Controllers
                         var resultAdmin = await _userManager.CreateAsync(userAdmin, "Admin123*");
                         await _userManager.AddToRoleAsync(userAdmin, UserType.AdminEndUser);
                     }
-                   
 
-                    //await _userManager.AddToRoleAsync(user, UserType.CustomerEndUser);
+                    if (user.IsDonor == true )
+                    {
+                        if (!await _roleManager.RoleExistsAsync(UserType.DonorEndUser))
+                        { await _roleManager.CreateAsync(new IdentityRole(UserType.DonorEndUser)); }
+
+                            await _userManager.AddToRoleAsync(user, UserType.DonorEndUser);
+                    }
+                    else
+                    {
+                        if (!await _roleManager.RoleExistsAsync(UserType.RecieverEndUser))
+                        { await _roleManager.CreateAsync(new IdentityRole(UserType.RecieverEndUser)); }
+                            await _userManager.AddToRoleAsync(user, UserType.RecieverEndUser);
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
-
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");

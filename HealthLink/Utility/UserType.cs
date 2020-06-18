@@ -10,7 +10,7 @@ namespace HealthLink.Utility
      
         public const string AdminEndUser = "Admin";
         public const string RecieverEndUser = "Reciever";
-        public const string Donor = "Donor";
+        public const string DonorEndUser = "Donor";
         public const string Hospital = "Hospital";
 
     }
