@@ -16,5 +16,11 @@ namespace HealthLink.Models
         }
 
         public DbSet<Hospitals> Hospitals { get; set; }
+
+        public DbSet<Donors> Donors { get; set; }
+
+        public DbSet<Recievers> Recievers { get; set; }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
     }   
 }

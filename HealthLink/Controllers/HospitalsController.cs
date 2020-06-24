@@ -2,28 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthLink.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthLink.Controllers
 {
     public class HospitalsController : Controller
     {
-        public IActionResult Index()
+       
+
+         private readonly ApplicationDBContext _db;
+
+        public HospitalsController(ApplicationDBContext db)
+        {
+            _db = db;
+
+            
+        }
+
+        public  IActionResult Index()
 
         {
             return View();
         }
 
-        public IActionResult Donors()
+        public async Task <IActionResult> Donors()
 
         {
-            return View();
+            //var allDonors = await _db.Donors.ToListAsync();
+            return View(await _db.Donors.ToListAsync());
         }
 
-        public IActionResult Recievers()
+        public async Task<IActionResult> Recievers()
 
         {
-            return View();
+            return View(await _db.Recievers.ToListAsync());
         }
 
         public IActionResult PostBlog()

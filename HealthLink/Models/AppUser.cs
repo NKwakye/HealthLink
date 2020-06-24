@@ -15,7 +15,9 @@ namespace HealthLink.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
-       public bool IsDonor { set; get; }
+       public string Location { set; get; }
+
+        public bool IsDonor { get; set; }
 
 
     }

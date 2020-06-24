@@ -332,10 +332,12 @@ namespace HealthLink.Controllers
                     PhoneNumber = model.PhoneNumber,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    Location = model.Location,
                     IsDonor = model.IsDonor,
-                    FullName = model.LastName + " " + model.LastName,
+                    FullName = model.FirstName + " " + model.LastName,
 
                 };
+
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -357,13 +359,36 @@ namespace HealthLink.Controllers
 
                     if (user.IsDonor == true )
                     {
+                        var newDonor = new Donors
+                        {
+                            FullName = user.FullName,
+                            Location = user.Location,
+                            Email = user.Email,
+                            PhoneNumber = user.PhoneNumber
+                        };
+
+                        _db.Add(newDonor);
+                        await _db.SaveChangesAsync();
+
                         if (!await _roleManager.RoleExistsAsync(UserType.DonorEndUser))
+
                         { await _roleManager.CreateAsync(new IdentityRole(UserType.DonorEndUser)); }
 
                             await _userManager.AddToRoleAsync(user, UserType.DonorEndUser);
                     }
                     else
                     {
+                        var newReciever = new Recievers
+                        {
+                            FullName = user.FullName,
+                            Location = user.Location,
+                            Email = user.Email,
+                            PhoneNumber = user.PhoneNumber
+                        };
+
+                        _db.Add(newReciever);
+                        await _db.SaveChangesAsync();
+
                         if (!await _roleManager.RoleExistsAsync(UserType.RecieverEndUser))
                         { await _roleManager.CreateAsync(new IdentityRole(UserType.RecieverEndUser)); }
                             await _userManager.AddToRoleAsync(user, UserType.RecieverEndUser);
